@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ProductsController } from './products/products.controller';
 import { ProductsModule } from './products/products.module';
+import { Product } from './products/product.module';
+import { OrdersModule } from './orders/orders.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -11,21 +14,17 @@ import { ProductsModule } from './products/products.module';
       dialect: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'myuser',
+      username: 'postgres',
       password: 'mypass',
       database: 'mydb',
-      models: [__dirname + '/**/*.model.ts'],
-      ssl: true,
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
-      },
+      models: [Product],
+      ssl: false,
       logging: true,
-      clientMinMessages: 'notice',
+      synchronize: true,
     }),
     ProductsModule,
+    OrdersModule,
+    UsersModule,
   ],
   controllers: [AppController, ProductsController],
   providers: [AppService],
