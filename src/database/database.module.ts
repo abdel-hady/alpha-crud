@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { Order } from 'src/orders/order.model';
+import { Product } from 'src/products/product.module';
 
 @Module({
   imports: [
@@ -10,7 +12,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
       username: 'postgres',
       password: 'mypass',
       database: 'mydb',
-      models: [__dirname + '/**/*.model.ts'],
+      models: [Product, Order],
+      autoLoadModels: true,
+      synchronize: true,
     }),
   ],
 })
