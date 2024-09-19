@@ -1,8 +1,8 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
-  tableName: 'products', // Explicitly set the table name
-  timestamps: true, // Add createdAt and updatedAt columns
+  tableName: 'products',
+  timestamps: true,
 })
 export class Product extends Model<Product> {
   @Column({
@@ -29,4 +29,10 @@ export class Product extends Model<Product> {
     allowNull: true,
   })
   description: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  photo: string;
 }
