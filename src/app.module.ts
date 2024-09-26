@@ -4,11 +4,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
-import { Product } from './products/product.module';
+import { Product } from './products/product.model';
 import { Order } from './orders/order.model';
 import { OrderProduct } from './orders/order-product.model';
 import { AuthModule } from './auth/auth.module';
 import { User } from './auth/user.model';
+import { ProtectedModule } from './protected/protected.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { User } from './auth/user.model';
     ProductsModule,
     OrdersModule,
     AuthModule,
+    ProtectedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

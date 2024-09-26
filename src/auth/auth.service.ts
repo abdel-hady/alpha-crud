@@ -32,11 +32,12 @@ export class AuthService {
     const payload = { username: user.email, sub: user.id };
     const token = this.jwtService.sign(payload);
 
+    // Instead of returning the token in the body, we handle it using cookies.
     return {
-      access_token: token,
+      token,
       user: {
         email: user.email,
-        role: user.role, // Add the user's role to the response
+        role: user.role,
       },
     };
   }
