@@ -11,6 +11,7 @@ export class AuthService {
     @InjectModel(User) private userModel: typeof User,
   ) {}
 
+  // Validate user email and password
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ where: { email } });
     if (!user) {
@@ -20,7 +21,7 @@ export class AuthService {
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
-      const { password, ...result } = user.toJSON();
+      const { password, ...result } = user.toJSON(); // Avoid returning password
       return result;
     } else {
       console.log('Password is incorrect for user:', email);
@@ -28,11 +29,11 @@ export class AuthService {
     }
   }
 
+  // Handle login, setting the token in a secure cookie
   async login(user: any) {
     const payload = { username: user.email, sub: user.id };
     const token = this.jwtService.sign(payload);
 
-    // Instead of returning the token in the body, we handle it using cookies.
     return {
       token,
       user: {
@@ -42,6 +43,7 @@ export class AuthService {
     };
   }
 
+  // Admin creation for seeding
   async createAdmin() {
     const adminEmail = 'admin@gmail.com';
     const adminPassword = '12345678';
@@ -49,6 +51,7 @@ export class AuthService {
     const existingUser = await this.userModel.findOne({
       where: { email: adminEmail },
     });
+
     if (!existingUser) {
       const hashedPassword = await bcrypt.hash(adminPassword, 10);
       await this.userModel.create({

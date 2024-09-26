@@ -27,8 +27,6 @@ export class Order extends Model<Order> {
   shippingDetails: {
     street: string;
     cardNumber: string;
-    extraInfo1: string;
-    extraInfo2: string;
   };
 
   @Column({
@@ -39,8 +37,6 @@ export class Order extends Model<Order> {
     name: string;
     email: string;
     phone: string;
-    extraInfo1: string;
-    extraInfo2: string;
   };
 
   @Column({

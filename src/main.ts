@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { Sequelize } from 'sequelize-typescript';
 import * as cookieParser from 'cookie-parser';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -21,7 +22,7 @@ async function bootstrap() {
 
   const sequelize = app.get(Sequelize);
   await sequelize.sync();
-
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
   console.log('Application is running on: http://localhost:3000');
 }

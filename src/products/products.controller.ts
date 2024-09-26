@@ -9,17 +9,22 @@ import {
   Query,
   UploadedFile,
   UseInterceptors,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './products.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   @UseInterceptors(
     FileInterceptor('photo', {
       storage: diskStorage({
@@ -35,14 +40,14 @@ export class ProductsController {
     }),
   )
   async createProduct(
-    @Body() product: any,
+    @Body() createProductDto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
     const photoPath = file ? file.filename : null;
     return await this.productsService.createProduct(
-      product.name,
-      product.type,
-      product.description,
+      createProductDto.name,
+      createProductDto.type,
+      createProductDto.description,
       photoPath,
     );
   }
@@ -83,6 +88,7 @@ export class ProductsController {
   }
 
   @Put(':id')
+  @UsePipes(new ValidationPipe())
   @UseInterceptors(
     FileInterceptor('photo', {
       storage: diskStorage({
@@ -99,14 +105,14 @@ export class ProductsController {
   )
   async updateProduct(
     @Param('id') id: number,
-    @Body() product: any,
+    @Body() updateProductDto: UpdateProductDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return await this.productsService.updateProduct(
       id,
-      product.name,
-      product.type,
-      product.description,
+      updateProductDto.name,
+      updateProductDto.type,
+      updateProductDto.description,
       file?.filename,
     );
   }

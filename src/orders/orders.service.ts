@@ -17,35 +17,31 @@ export class OrdersService {
 
   async createOrder(createOrderDto: CreateOrderDto) {
     try {
-      // First, create the order entry
       const order = await this.orderModel.create({
         shippingDetails: createOrderDto.shippingDetails,
         personalDetails: createOrderDto.personalDetails,
-        isApproved: createOrderDto.isApproved || false, // Default false if not provided
+        isApproved: createOrderDto.isApproved || false,
       });
 
       console.log('Order created:', order.id);
 
-      // Check if the productIds array exists and has products
       const productIds = createOrderDto.productIds;
       if (productIds && productIds.length > 0) {
-        // Map the productIds to create OrderProduct records
         const orderProducts = productIds.map((productId) => ({
-          orderId: order.id, // Assign the newly created order's ID
-          productId, // Assign the corresponding productId
+          orderId: order.id,
+          productId,
         }));
 
-        // Bulk create the OrderProduct records
         await OrderProduct.bulkCreate(orderProducts);
         console.log('OrderProducts created:', orderProducts);
       } else {
         console.warn('No productIds provided for the order.');
       }
 
-      return order; // Return the created order
+      return order;
     } catch (error) {
       console.error('Error while creating order:', error);
-      throw error; // Re-throw the error to be caught by NestJS
+      throw error;
     }
   }
 
