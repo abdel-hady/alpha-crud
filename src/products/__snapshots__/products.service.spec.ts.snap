@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductsService should match the snapshot of product creation 1`] = `
+{
+  "id": 1,
+  "name": "Sample Product",
+  "price": 100,
+}
+`;

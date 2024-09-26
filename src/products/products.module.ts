@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
-import { Product } from './product.module';
+import { Product } from './product.model';
 
 @Module({
   imports: [SequelizeModule.forFeature([Product])],
@@ -10,4 +10,4 @@ import { Product } from './product.module';
   providers: [ProductsService],
   exports: [ProductsService],
 })
-export class ProductsModule {}
+export class ProductsModule { }

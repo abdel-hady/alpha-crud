@@ -5,8 +5,8 @@ import {
   DataType,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { Product } from 'src/products/product.module';
 import { OrderProduct } from './order-product.model';
+import { Product } from '../products/product.model';
 
 @Table({
   tableName: 'orders',

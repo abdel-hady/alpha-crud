@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Order } from './order.model';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { Product } from 'src/products/product.module';
 import { OrderProduct } from './order-product.model';
+import { Product } from '../products/product.model';
 
 @Injectable()
 export class OrdersService {
