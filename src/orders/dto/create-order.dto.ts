@@ -11,42 +11,42 @@ import {
 import { Type } from 'class-transformer';
 
 class ShippingDetailsDto {
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: 'Street is required' })
+  @IsString({ message: 'Street must be a string' })
   street: string;
 
-  @IsNotEmpty()
-  @IsCreditCard()
+  @IsCreditCard({ message: 'Invalid card number' })
+  @IsNotEmpty({ message: 'Card number is required' })
   cardNumber: string;
 }
 
 class PersonalDetailsDto {
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: 'Name is required' })
+  @IsString({ message: 'Name must be a string' })
   name: string;
 
-  @IsNotEmpty()
-  @IsEmail()
+  @IsEmail({}, { message: 'Invalid email address' })
+  @IsNotEmpty({ message: 'Email is required' })
   email: string;
 
-  @IsNotEmpty()
-  @IsPhoneNumber(null)
+  @IsPhoneNumber(null, { message: 'Invalid phone number' })
+  @IsNotEmpty({ message: 'Phone number is required' })
   phone: string;
 }
 
 export class CreateOrderDto {
-  @IsArray()
-  @IsNotEmpty({ each: true })
+  @IsArray({ message: 'Product IDs must be an array' })
+  @IsNotEmpty({ each: true, message: 'Product ID is required' })
   productIds: number[];
 
-  @ValidateNested()
+  @ValidateNested({ message: 'Invalid shipping details' })
   @Type(() => ShippingDetailsDto)
   shippingDetails: ShippingDetailsDto;
 
-  @ValidateNested()
+  @ValidateNested({ message: 'Invalid personal details' })
   @Type(() => PersonalDetailsDto)
   personalDetails: PersonalDetailsDto;
 
-  @IsBoolean()
+  @IsBoolean({ message: 'isApproved must be a boolean value' })
   isApproved?: boolean;
 }
