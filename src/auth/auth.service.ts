@@ -9,7 +9,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     @InjectModel(User) private userModel: typeof User,
-  ) {}
+  ) { }
 
   // Validate user email and password
   async validateUser(email: string, password: string): Promise<any> {
@@ -43,10 +43,9 @@ export class AuthService {
     };
   }
 
-  // Admin creation for seeding
   async createAdmin() {
-    const adminEmail = 'admin@gmail.com';
-    const adminPassword = '12345678';
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
 
     const existingUser = await this.userModel.findOne({
       where: { email: adminEmail },
