@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Order } from 'src/orders/order.model';
-import { Product } from 'src/products/product.model';
+import { Order } from 'src/models/order.model';
+import { Product } from 'src/models/product.model';
 
 @Module({
   imports: [

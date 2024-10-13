@@ -1,15 +1,13 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ProductsModule } from './products/products.module';
-import { OrdersModule } from './orders/orders.module';
-import { Product } from './products/product.model';
-import { Order } from './orders/order.model';
-import { OrderProduct } from './orders/order-product.model';
-import { AuthModule } from './auth/auth.module';
-import { User } from './auth/user.model';
-import { ProtectedModule } from './protected/protected.module';
+import { ProductsModule } from './modules/products.module';
+import { OrdersModule } from './modules/orders.module';
+import { Product } from './models/product.model';
+import { Order } from './models/order.model';
+import { OrderProduct } from './models/order-product.model';
+import { AuthModule } from './modules/auth.module';
+import { User } from './models/user.model';
+import { ProtectedModule } from './modules/protected.module';
 
 @Module({
   imports: [
@@ -28,7 +26,7 @@ import { ProtectedModule } from './protected/protected.module';
     AuthModule,
     ProtectedModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
