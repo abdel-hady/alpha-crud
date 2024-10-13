@@ -13,14 +13,20 @@ async function bootstrap() {
   const environment = process.env.NODE_ENV || 'development';
   dotenv.config({ path: `.env.${environment}` });
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+    logger: ['log', 'error', 'warn'],
+  });
+
   const configService = app.get(ConfigService);
   setupCors(app, configService);
   setupMiddleware(app);
   await setupDatabase(app);
   setupGlobalPipes(app);
+
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new JwtAuthGuard(reflector));
+
   await app.listen(3000);
   console.log(`Application is running on: http://localhost:3000`);
 }

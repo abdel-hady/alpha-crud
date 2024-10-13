@@ -4,4 +4,4 @@ import { ProtectedController } from '../ controllers/protected.controller';
 @Module({
   controllers: [ProtectedController],
 })
-export class ProtectedModule { }
+export class ProtectedModule {}

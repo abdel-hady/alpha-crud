@@ -13,7 +13,7 @@ export class OrdersService {
     private readonly orderModel: typeof Order,
     @InjectModel(Product)
     private readonly productModel: typeof Product,
-  ) { }
+  ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
     try {

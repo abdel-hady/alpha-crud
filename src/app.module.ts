@@ -9,6 +9,7 @@ import { OrderProduct } from './models/order-product.model';
 import { AuthModule } from './modules/auth.module';
 import { User } from './models/user.model';
 import { ProtectedModule } from './modules/protected.module';
+import { LoggerModule } from './modules/logger.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ProtectedModule } from './modules/protected.module';
     OrdersModule,
     AuthModule,
     ProtectedModule,
+    LoggerModule,
   ],
   controllers: [],
   providers: [],

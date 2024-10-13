@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { Product } from '../models/product.model';
 
 @Injectable()
 export class ProductsService {
+  private readonly logger = new Logger(ProductsService.name);
   constructor(
     @InjectModel(Product)
     private readonly productModel: typeof Product,
@@ -22,6 +23,7 @@ export class ProductsService {
       description,
       photo: photoPath,
     });
+    this.logger.log(`Product created: ${JSON.stringify(product)}`);
     return product;
   }
 
@@ -46,7 +48,7 @@ export class ProductsService {
 
     const totalPages = Math.ceil(totalItems / limit);
     const currentPage = Math.floor(offset / limit) + 1;
-
+    this.logger.log(`Retrieved ${totalItems} products`);
     return {
       products,
       totalItems,
@@ -80,6 +82,7 @@ export class ProductsService {
     await this.productModel.destroy({
       where: { id },
     });
+    this.logger.log(`Product deleted: ID = ${id}`);
     return { message: 'Product deleted successfully' };
   }
 }
