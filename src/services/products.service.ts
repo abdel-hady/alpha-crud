@@ -1,7 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { Product } from '../models/product.model';
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 
 @Injectable()
 export class ProductsService {
@@ -9,6 +10,7 @@ export class ProductsService {
   constructor(
     @InjectModel(Product)
     private readonly productModel: typeof Product,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) { }
 
   async createProduct(
@@ -32,6 +34,16 @@ export class ProductsService {
     sorting: { field: string; order: 'ASC' | 'DESC' },
     filtering: { field: string; value: string }[],
   ) {
+    const cacheKey = `products`;
+    console.log(await this.cacheManager.store.keys());
+    const cachedProducts = await this.cacheManager.get(cacheKey);
+
+    if (cachedProducts) {
+      this.logger.log(`Retrieved products from cache`);
+      this.logger.log(cachedProducts);
+      return cachedProducts;
+    }
+
     const { limit, offset } = pagination;
     const { field, order } = sorting;
     const filters = filtering.map((filter) => ({
@@ -49,13 +61,20 @@ export class ProductsService {
     const totalPages = Math.ceil(totalItems / limit);
     const currentPage = Math.floor(offset / limit) + 1;
     this.logger.log(`Retrieved ${totalItems} products`);
-    return {
+    const result = {
       products,
       totalItems,
       totalPages,
       currentPage,
       itemsPerPage: limit,
     };
+
+    // Store result in Redis cache
+    const res = await this.cacheManager.set(cacheKey, 1, 0);
+    console.log(res);
+    this.logger.log(`Cached products data`);
+
+    return result;
   }
 
   async getProductById(id: number) {

@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth.module';
 import { User } from './models/user.model';
 import { ProtectedModule } from './modules/protected.module';
 import { LoggerModule } from './modules/logger.module';
+import { RedisModule } from './modules/redis.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { LoggerModule } from './modules/logger.module';
     AuthModule,
     ProtectedModule,
     LoggerModule,
+    RedisModule,
   ],
   controllers: [],
   providers: [],
