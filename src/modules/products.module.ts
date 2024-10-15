@@ -6,6 +6,7 @@ import { ProductsController } from 'src/ controllers/products.controller';
 import type { RedisClientOptions } from 'redis';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
+import { QueuesModule } from './queues.module';
 
 @Module({
   imports: [
@@ -17,9 +18,10 @@ import { redisStore } from 'cache-manager-redis-yet';
         port: 6379,
       },
     }),
+    QueuesModule,
   ],
   controllers: [ProductsController],
   providers: [ProductsService],
   exports: [ProductsService],
 })
-export class ProductsModule { }
+export class ProductsModule {}

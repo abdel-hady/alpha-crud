@@ -11,6 +11,7 @@ import { User } from './models/user.model';
 import { ProtectedModule } from './modules/protected.module';
 import { LoggerModule } from './modules/logger.module';
 import { RedisModule } from './modules/redis.module';
+import { QueuesModule } from './modules/queues.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { RedisModule } from './modules/redis.module';
     ProtectedModule,
     LoggerModule,
     RedisModule,
+    QueuesModule,
   ],
   controllers: [],
   providers: [],

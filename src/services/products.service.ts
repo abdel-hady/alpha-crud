@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { Product } from '../models/product.model';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
+import { Queue } from 'bull';
+import { InjectQueue } from '@nestjs/bull';
 
 @Injectable()
 export class ProductsService {
@@ -11,6 +13,7 @@ export class ProductsService {
     @InjectModel(Product)
     private readonly productModel: typeof Product,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @InjectQueue('product-queue') private readonly productQueue: Queue,
   ) { }
 
   async createProduct(
@@ -34,7 +37,7 @@ export class ProductsService {
     sorting: { field: string; order: 'ASC' | 'DESC' },
     filtering: { field: string; value: string }[],
   ) {
-    const cacheKey = `products`;
+    const cacheKey = `products:limit=${pagination.limit}:offset=${pagination.offset}:sorting=${sorting.field}:${sorting.order}:filtering=${JSON.stringify(filtering)}`;
     console.log(await this.cacheManager.store.keys());
     const cachedProducts = await this.cacheManager.get(cacheKey);
 
@@ -80,6 +83,14 @@ export class ProductsService {
     return await this.productModel.findByPk(id);
   }
 
+  async updateProductStockInQueue(productId: number) {
+    await this.productQueue.add('update-product-stock', {
+      productId,
+    });
+    this.logger.log(
+      `Stock update job added to the queue for product ID: ${productId}`,
+    );
+  }
   async updateProduct(
     id: number,
     name: string,
@@ -89,7 +100,7 @@ export class ProductsService {
   ) {
     const updateData = { name, type, description };
     if (photo) updateData['photo'] = photo;
-
+    await this.updateProductStockInQueue(id);
     await this.productModel.update(updateData, {
       where: { id },
     });
