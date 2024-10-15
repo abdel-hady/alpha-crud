@@ -5,19 +5,21 @@ import { Product } from '../models/product.model';
 import { ProductsController } from 'src/ controllers/products.controller';
 import type { RedisClientOptions } from 'redis';
 import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
 
 @Module({
   imports: [
     SequelizeModule.forFeature([Product]),
     CacheModule.register<RedisClientOptions>({
       store: redisStore,
-      // Store-specific configuration:
-      host: 'localhost',
-      port: 6379,
+      socket: {
+        host: '127.0.0.1',
+        port: 6379,
+      },
     }),
   ],
   controllers: [ProductsController],
   providers: [ProductsService],
   exports: [ProductsService],
 })
-export class ProductsModule {}
+export class ProductsModule { }

@@ -69,8 +69,7 @@ export class ProductsService {
       itemsPerPage: limit,
     };
 
-    // Store result in Redis cache
-    const res = await this.cacheManager.set(cacheKey, 1, 0);
+    const res = await this.cacheManager.set(cacheKey, result, 0);
     console.log(res);
     this.logger.log(`Cached products data`);
 
