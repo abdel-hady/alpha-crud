@@ -13,10 +13,14 @@ import { LoggerModule } from './modules/logger.module';
 import { RedisModule } from './modules/redis.module';
 import { QueuesModule } from './modules/queues.module';
 import { MailerCustomModule } from './modules/mailer.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TaskSchedulerService } from './services/task-scheduler.service';
+import { CustomMailerService } from './services/custom-mailer.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     SequelizeModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         dialect: 'postgres',
@@ -40,6 +44,6 @@ import { MailerCustomModule } from './modules/mailer.module';
     MailerCustomModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [TaskSchedulerService, CustomMailerService],
 })
 export class AppModule {}
