@@ -12,6 +12,7 @@ import { ProtectedModule } from './modules/protected.module';
 import { LoggerModule } from './modules/logger.module';
 import { RedisModule } from './modules/redis.module';
 import { QueuesModule } from './modules/queues.module';
+import { MailerCustomModule } from './modules/mailer.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { QueuesModule } from './modules/queues.module';
     LoggerModule,
     RedisModule,
     QueuesModule,
+    MailerCustomModule,
   ],
   controllers: [],
   providers: [],

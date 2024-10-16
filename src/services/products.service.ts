@@ -14,7 +14,7 @@ export class ProductsService {
     private readonly productModel: typeof Product,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectQueue('product-queue') private readonly productQueue: Queue,
-  ) { }
+  ) {}
 
   async createProduct(
     name: string,

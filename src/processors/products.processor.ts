@@ -1,20 +1,25 @@
 import { Process, Processor } from '@nestjs/bull';
 import { Job } from 'bull';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { CustomMailerService } from 'src/services/custom-mailer.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 @Processor('product-queue')
 export class ProductsProcessor {
-  private readonly logger = new Logger(ProductsProcessor.name);
+  constructor(
+    private readonly mailerService: CustomMailerService,
+    private configService: ConfigService,
+  ) {}
 
   @Process('update-product-stock')
-  async handleStockUpdate(job: Job) {
-    const { productId, newStock } = job.data;
-    this.logger.log(
-      `Processing stock update for product ID: ${productId} with new stock: ${newStock}`,
-    );
+  async handleUpdateProductStock(job: Job) {
+    const { productId } = job.data;
 
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    this.logger.log(`Stock updated for product ID: ${productId}`);
+    const email = this.configService.get('MAIL_TO');
+    const subject = `Stock Updated for Product ID ${productId}`;
+    const context = productId;
+
+    await this.mailerService.sendEmail(email, subject, context);
   }
 }
