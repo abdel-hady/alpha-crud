@@ -14,7 +14,7 @@ export class TaskSchedulerService {
   async handleCron() {
     this.logger.log('Task executed: Logging a message every 5 minutes');
     const email = this.configService.get('MAIL_TO');
-    const subject = 'Scheduled Email: Sent every 5 minutes';
+    const subject = 'Scheduled Email: Sent every 12 Hours';
     const context =
       'This is a periodic email sent every 5 minutes by the task scheduler.';
 
