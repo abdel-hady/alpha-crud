@@ -8,7 +8,6 @@ import { Order } from './orders/models/order.model';
 import { OrderProduct } from './orders/models/order-product.model';
 import { AuthModule } from './auth/modules/auth.module';
 import { User } from './auth/models/user.model';
-import { LoggerModule } from './services/logger/logger.module';
 import { RedisModule } from './modules/redis.module';
 import { QueuesModule } from './services/queues/queues.module';
 import { MailerCustomModule } from './services/mailer/mailer.module';
