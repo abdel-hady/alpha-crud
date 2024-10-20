@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrdersService } from '../../services/orders.service';
+import { OrdersService } from '../../orders/services/orders.service';
 import { getModelToken } from '@nestjs/sequelize';
-import { Order } from '../../models/order.model';
-import { Product } from '../../models/product.model';
-import { OrderProduct } from '../../models/order-product.model';
-import { CreateOrderDto } from '../../dtos/orders/create-order.dto';
+import { Order } from '../../orders/models/order.model';
+import { Product } from '../../products/models/product.model';
+import { OrderProduct } from '../../orders/models/order-product.model';
+import { CreateOrderDto } from '../../orders/dto/create-order.dto';
 
 const mockOrderModel = {
   create: jest.fn(),

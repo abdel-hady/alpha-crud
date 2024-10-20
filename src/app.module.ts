@@ -1,21 +1,20 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ProductsModule } from './modules/products.module';
-import { OrdersModule } from './modules/orders.module';
-import { Product } from './models/product.model';
-import { Order } from './models/order.model';
-import { OrderProduct } from './models/order-product.model';
-import { AuthModule } from './modules/auth.module';
-import { User } from './models/user.model';
-import { ProtectedModule } from './modules/protected.module';
-import { LoggerModule } from './modules/logger.module';
+import { ProductsModule } from './products/modules/products.module';
+import { OrdersModule } from './orders/modules/orders.module';
+import { Product } from './products/models/product.model';
+import { Order } from './orders/models/order.model';
+import { OrderProduct } from './orders/models/order-product.model';
+import { AuthModule } from './auth/modules/auth.module';
+import { User } from './auth/models/user.model';
+import { LoggerModule } from './services/logger/logger.module';
 import { RedisModule } from './modules/redis.module';
-import { QueuesModule } from './modules/queues.module';
-import { MailerCustomModule } from './modules/mailer.module';
+import { QueuesModule } from './services/queues/queues.module';
+import { MailerCustomModule } from './services/mailer/mailer.module';
 import { ScheduleModule } from '@nestjs/schedule';
-import { TaskSchedulerService } from './services/task-scheduler.service';
-import { CustomMailerService } from './services/custom-mailer.service';
+import { TaskSchedulerService } from './services/scheduler/task-scheduler.service';
+import { CustomMailerService } from './services/mailer/custom-mailer.service';
 
 @Module({
   imports: [
@@ -37,8 +36,6 @@ import { CustomMailerService } from './services/custom-mailer.service';
     ProductsModule,
     OrdersModule,
     AuthModule,
-    ProtectedModule,
-    LoggerModule,
     RedisModule,
     QueuesModule,
     MailerCustomModule,

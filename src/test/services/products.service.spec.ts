@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/sequelize';
-import { ProductsService } from '../../services/products.service';
-import { Product } from '../../models/product.model';
+import { ProductsService } from '../../products/services/products.service';
+import { Product } from '../../products/models/product.model';
 
 // Mock data for the product
 const mockProduct = {

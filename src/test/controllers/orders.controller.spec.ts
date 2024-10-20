@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrdersController } from '../../ controllers/orders.controller';
-import { OrdersService } from '../../services/orders.service';
-import { CreateOrderDto } from '../../dtos/orders/create-order.dto';
-import { UpdateOrderDto } from '../../dtos/orders/update-order.dto';
+import { OrdersController } from '../../orders/controllers/orders.controller';
+import { OrdersService } from '../../orders/services/orders.service';
+import { CreateOrderDto } from '../../orders/dto/create-order.dto';
+import { UpdateOrderDto } from '../../orders/dto/update-order.dto';
 
 const mockOrdersService = {
   createOrder: jest.fn(),
